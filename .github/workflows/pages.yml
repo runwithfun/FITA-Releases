@@ -38,6 +38,7 @@ jobs:
                 assets: [ .assets[] | {name: .name, size: .size, url: .browser_download_url} ]
             } ]' > releases.json
           mkdir -p out
+          cp -r assets out/assets 2>/dev/null || true
           python3 - <<'PY'
           import pathlib
           tpl = pathlib.Path("site/template.html").read_text()
