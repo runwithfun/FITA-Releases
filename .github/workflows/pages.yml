@@ -1,0 +1,53 @@
+name: Pages
+
+# Генерит красивую страницу релизов из GitHub Releases и деплоит в GitHub Pages.
+# Деплой идёт НАПРЯМУЮ (deploy-pages), без коммитов в репозиторий. Обновляется
+# автоматически при публикации/правке релиза. Никакой ручной работы.
+on:
+  release:
+    types: [published, edited, deleted, released, prereleased]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build page from releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/${{ github.repository }}/releases?per_page=100" --jq '
+            [ .[] | {
+                tag: .tag_name, name: .name, body: .body,
+                date: .published_at, prerelease: .prerelease,
+                assets: [ .assets[] | {name: .name, size: .size, url: .browser_download_url} ]
+            } ]' > releases.json
+          mkdir -p out
+          python3 - <<'PY'
+          import pathlib
+          tpl = pathlib.Path("site/template.html").read_text()
+          data = pathlib.Path("releases.json").read_text().strip() or "[]"
+          pathlib.Path("out/index.html").write_text(tpl.replace("__RELEASES_JSON__", data))
+          PY
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

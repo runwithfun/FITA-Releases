@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ФИТА — сборки</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237A2B22'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23F4EFE6' font-family='Georgia,serif' font-style='italic'>Ф</text></svg>" />
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<style>
+  :root{
+    --paper:#F4EFE6; --card:#FFFFFF; --ink:#23201B; --ink2:#6E6658; --ink3:#A39B8C;
+    --hair:rgba(40,30,20,.10); --brick:#7A2B22; --clay:#C2683C; --sage:#5A7184;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:-apple-system,'SF Pro Text',system-ui,Segoe UI,Roboto,sans-serif;
+    --mono:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --paper:#1A1714; --card:#241F1A; --ink:#EDE6DA; --ink2:#B8AE9F; --ink3:#8A8173;
+    --hair:rgba(255,240,220,.10);
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+  header{text-align:center;padding:64px 0 40px}
+  .mark{width:76px;height:76px;border-radius:22px;background:var(--brick);color:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-family:var(--serif);
+    font-style:italic;font-size:46px;margin:0 auto 20px;box-shadow:0 8px 30px rgba(122,43,34,.28)}
+  h1{font-family:var(--serif);font-style:italic;font-weight:600;font-size:44px;margin:0 0 6px;letter-spacing:-.5px}
+  .tag{color:var(--ink2);font-size:16px;margin:0 0 22px}
+  .badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .badge{font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--ink2);
+    border:1px solid var(--hair);border-radius:999px;padding:5px 11px}
+  .latest{margin-top:30px}
+  .btn{display:inline-block;background:var(--brick);color:#fff;text-decoration:none;
+    font-weight:700;font-size:15px;padding:13px 24px;border-radius:13px;
+    box-shadow:0 6px 22px rgba(122,43,34,.25)}
+  section{margin-top:40px}
+  .rel{background:var(--card);border:1px solid var(--hair);border-radius:20px;
+    padding:22px 24px;margin-bottom:20px;box-shadow:0 4px 18px rgba(45,32,20,.05)}
+  .rel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .rel-ver{font-family:var(--serif);font-style:italic;font-size:26px;font-weight:600}
+  .rel-date{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+  .pre{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:1px;
+    color:var(--clay);border:1px solid var(--clay);border-radius:6px;padding:1px 7px;text-transform:uppercase;margin-left:8px}
+  .notes{font-size:15px;color:var(--ink)}
+  .notes h1,.notes h2,.notes h3{font-family:var(--serif);font-style:italic}
+  .notes code{font-family:var(--mono);font-size:.85em;background:var(--hair);padding:1px 5px;border-radius:5px}
+  .notes a{color:var(--brick)}
+  .assets{margin-top:16px;border-top:1px solid var(--hair);padding-top:14px}
+  .asset{display:flex;align-items:center;gap:10px;padding:7px 0;text-decoration:none;color:var(--ink)}
+  .asset:hover .a-name{color:var(--brick)}
+  .a-plat{font-size:20px;width:26px;text-align:center}
+  .a-name{font-weight:600;font-size:14px}
+  .a-size{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:auto}
+  .empty{text-align:center;color:var(--ink2);padding:40px 0}
+  footer{text-align:center;color:var(--ink3);font-size:13px;margin-top:50px}
+  footer a{color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark">Ф</div>
+    <h1>ФИТА</h1>
+    <p class="tag">Фитнес, который думает вместе с тобой — сборки для теста</p>
+    <div class="badges">
+      <span class="badge">iOS</span><span class="badge">Android</span>
+      <span class="badge">Windows</span><span class="badge">macOS</span><span class="badge">Linux</span>
+    </div>
+    <div class="latest" id="latest"></div>
+  </header>
+  <section id="releases"></section>
+  <footer>
+    Закрытая бета · <a href="https://github.com/runwithfun/FITA-Releases/releases">все релизы на GitHub</a><br/>
+    Проверяй целостность по <code>SHA256SUMS.txt</code> в каждом релизе.
+  </footer>
+</div>
+
+<script>
+  // Данные релизов вставляются билд-джобой на месте плейсхолдера ниже.
+  const RELEASES = __RELEASES_JSON__;
+
+  const PLAT = [
+    [/android|\.apk/i, "🤖", "Android"],
+    [/windows|\.exe|\.msi|-win/i, "🪟", "Windows"],
+    [/macos|\.dmg|-mac/i, "🍎", "macOS"],
+    [/linux|\.deb|-linux/i, "🐧", "Linux"],
+    [/sha256|checksum/i, "🔒", "Чек-суммы"],
+  ];
+  const platMeta = n => (PLAT.find(p => p[0].test(n)) || ["", "📦", n]);
+  const fmtSize = b => b > 1e6 ? (b/1048576).toFixed(1)+" МБ" : Math.round(b/1024)+" КБ";
+  const fmtDate = s => new Date(s).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
+
+  const relEl = document.getElementById("releases");
+  const latestEl = document.getElementById("latest");
+
+  if (!RELEASES.length) {
+    relEl.innerHTML = '<div class="empty">Скоро здесь появятся сборки.</div>';
+  } else {
+    const latest = RELEASES[0];
+    latestEl.innerHTML = '<a class="btn" href="#' + latest.tag + '">⬇️ Последняя: ' + latest.tag + '</a>';
+    relEl.innerHTML = RELEASES.map(r => {
+      const notes = marked.parse(r.body || "_без заметок_");
+      const assets = (r.assets || []).map(a => {
+        const [ , icon, label] = platMeta(a.name);
+        return '<a class="asset" href="' + a.url + '"><span class="a-plat">' + icon +
+          '</span><span class="a-name">' + label + '</span>' +
+          '<span class="a-size">' + fmtSize(a.size) + '</span></a>';
+      }).join("");
+      return '<div class="rel" id="' + r.tag + '">' +
+        '<div class="rel-head"><div class="rel-ver">' + (r.name || r.tag) +
+        (r.prerelease ? '<span class="pre">beta</span>' : '') + '</div>' +
+        '<div class="rel-date">' + fmtDate(r.date) + '</div></div>' +
+        '<div class="notes">' + notes + '</div>' +
+        (assets ? '<div class="assets">' + assets + '</div>' : '') +
+        '</div>';
+    }).join("");
+  }
+</script>
+</body>
+</html>
