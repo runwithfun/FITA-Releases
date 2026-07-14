@@ -103,7 +103,10 @@
     const latest = RELEASES[0];
     latestEl.innerHTML = '<a class="btn" href="#' + latest.tag + '">⬇️ Последняя: ' + latest.tag + '</a>';
     relEl.innerHTML = RELEASES.map(r => {
-      const notes = marked.parse(r.body || "_без заметок_");
+      // Ведущую картинку-баннер из заметок вырезаем: на странице баннер уже есть
+      // сверху (hero), внутри карточки он дублировался. На GitHub-релизе остаётся.
+      const body = (r.body || "_без заметок_").replace(/^\s*!\[[^\]]*]\([^)]*\)\s*/, "");
+      const notes = marked.parse(body);
       const assets = (r.assets || []).map(a => {
         const [ , icon, label] = platMeta(a.name);
         return '<a class="asset" href="' + a.url + '"><span class="a-plat">' + icon +
