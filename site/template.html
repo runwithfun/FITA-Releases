@@ -51,7 +51,7 @@
   .assets{margin-top:16px;border-top:1px solid var(--hair);padding-top:14px}
   .asset{display:flex;align-items:center;gap:10px;padding:7px 0;text-decoration:none;color:var(--ink)}
   .asset:hover .a-name{color:var(--brick)}
-  .a-plat{font-size:20px;width:26px;text-align:center}
+  .a-dot{width:7px;height:7px;border-radius:2px;background:var(--brick);flex-shrink:0}
   .a-name{font-weight:600;font-size:14px}
   .a-size{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:auto}
   .empty{text-align:center;color:var(--ink2);padding:40px 0}
@@ -84,13 +84,13 @@
   const RELEASES = __RELEASES_JSON__;
 
   const PLAT = [
-    [/android|\.apk/i, "🤖", "Android"],
-    [/windows|\.exe|\.msi|-win/i, "🪟", "Windows"],
-    [/macos|\.dmg|-mac/i, "🍎", "macOS"],
-    [/linux|\.deb|-linux/i, "🐧", "Linux"],
-    [/sha256|checksum/i, "🔒", "Чек-суммы"],
+    [/android|\.apk/i, "Android"],
+    [/windows|\.exe|\.msi|-win/i, "Windows"],
+    [/macos|\.dmg|-mac/i, "macOS"],
+    [/linux|\.deb|-linux/i, "Linux"],
+    [/sha256|checksum/i, "Чек-суммы"],
   ];
-  const platMeta = n => (PLAT.find(p => p[0].test(n)) || ["", "📦", n]);
+  const platMeta = n => (PLAT.find(p => p[0].test(n)) || [null, n]);
   const fmtSize = b => b > 1e6 ? (b/1048576).toFixed(1)+" МБ" : Math.round(b/1024)+" КБ";
   const fmtDate = s => new Date(s).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
 
@@ -101,16 +101,16 @@
     relEl.innerHTML = '<div class="empty">Скоро здесь появятся сборки.</div>';
   } else {
     const latest = RELEASES[0];
-    latestEl.innerHTML = '<a class="btn" href="#' + latest.tag + '">⬇️ Последняя: ' + latest.tag + '</a>';
+    latestEl.innerHTML = '<a class="btn" href="#' + latest.tag + '">Последняя сборка · ' + latest.tag + '</a>';
     relEl.innerHTML = RELEASES.map(r => {
       // Ведущую картинку-баннер из заметок вырезаем: на странице баннер уже есть
       // сверху (hero), внутри карточки он дублировался. На GitHub-релизе остаётся.
       const body = (r.body || "_без заметок_").replace(/^\s*!\[[^\]]*]\([^)]*\)\s*/, "");
       const notes = marked.parse(body);
       const assets = (r.assets || []).map(a => {
-        const [ , icon, label] = platMeta(a.name);
-        return '<a class="asset" href="' + a.url + '"><span class="a-plat">' + icon +
-          '</span><span class="a-name">' + label + '</span>' +
+        const [ , label] = platMeta(a.name);
+        return '<a class="asset" href="' + a.url + '"><span class="a-dot"></span>' +
+          '<span class="a-name">' + label + '</span>' +
           '<span class="a-size">' + fmtSize(a.size) + '</span></a>';
       }).join("");
       return '<div class="rel" id="' + r.tag + '">' +
