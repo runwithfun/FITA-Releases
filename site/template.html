@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ФИТА — сборки</title>
+<title>FITA — downloads</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237A2B22'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23F4EFE6' font-family='Georgia,serif' font-style='italic'>Ф</text></svg>" />
 <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
 <style>
@@ -62,10 +62,10 @@
 <body>
 <div class="wrap">
   <header>
-    <img class="hero" src="assets/banner.jpg" alt="ФИТА" />
+    <img class="hero" src="assets/banner.jpg" alt="FITA" />
     <div class="mark">Ф</div>
-    <h1>ФИТА</h1>
-    <p class="tag">Фитнес, который думает вместе с тобой — сборки для теста</p>
+    <h1>FITA</h1>
+    <p class="tag">Fitness that thinks with you — app downloads</p>
     <div class="badges">
       <span class="badge">iOS</span><span class="badge">Android</span>
       <span class="badge">Windows</span><span class="badge">macOS</span><span class="badge">Linux</span>
@@ -74,13 +74,13 @@
   </header>
   <section id="releases"></section>
   <footer>
-    Закрытая бета · <a href="https://github.com/runwithfun/FITA-Releases/releases">все релизы на GitHub</a><br/>
-    Проверяй целостность по <code>SHA256SUMS.txt</code> в каждом релизе.
+    Beta · <a href="https://github.com/runwithfun/FITA-Releases/releases">all releases on GitHub</a><br/>
+    Verify your download with <code>SHA256SUMS.txt</code> attached to every release.
   </footer>
 </div>
 
 <script>
-  // Данные релизов вставляются билд-джобой на месте плейсхолдера ниже.
+  // Release data is injected by the build job in place of the placeholder below.
   const RELEASES = __RELEASES_JSON__;
 
   const PLAT = [
@@ -88,24 +88,24 @@
     [/windows|\.exe|\.msi|-win/i, "Windows"],
     [/macos|\.dmg|-mac/i, "macOS"],
     [/linux|\.deb|-linux/i, "Linux"],
-    [/sha256|checksum/i, "Чек-суммы"],
+    [/sha256|checksum/i, "Checksums"],
   ];
   const platMeta = n => (PLAT.find(p => p[0].test(n)) || [null, n]);
-  const fmtSize = b => b > 1e6 ? (b/1048576).toFixed(1)+" МБ" : Math.round(b/1024)+" КБ";
+  const fmtSize = b => b > 1e6 ? (b/1048576).toFixed(1)+" MB" : Math.round(b/1024)+" KB";
   const fmtDate = s => new Date(s).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
 
   const relEl = document.getElementById("releases");
   const latestEl = document.getElementById("latest");
 
   if (!RELEASES.length) {
-    relEl.innerHTML = '<div class="empty">Скоро здесь появятся сборки.</div>';
+    relEl.innerHTML = '<div class="empty">Builds will appear here soon.</div>';
   } else {
     const latest = RELEASES[0];
-    latestEl.innerHTML = '<a class="btn" href="#' + latest.tag + '">Последняя сборка · ' + latest.tag + '</a>';
+    latestEl.innerHTML = '<a class="btn" href="#' + latest.tag + '">Latest build · ' + latest.tag + '</a>';
     relEl.innerHTML = RELEASES.map(r => {
-      // Ведущую картинку-баннер из заметок вырезаем: на странице баннер уже есть
-      // сверху (hero), внутри карточки он дублировался. На GitHub-релизе остаётся.
-      const body = (r.body || "_без заметок_").replace(/^\s*!\[[^\]]*]\([^)]*\)\s*/, "");
+      // Strip the leading banner image from the notes: the page already shows it
+      // as the hero; on the GitHub release it stays.
+      const body = (r.body || "_no notes_").replace(/^\s*!\[[^\]]*]\([^)]*\)\s*/, "");
       const notes = marked.parse(body);
       const assets = (r.assets || []).map(a => {
         const [ , label] = platMeta(a.name);
