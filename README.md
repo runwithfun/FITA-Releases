@@ -1,92 +1,97 @@
 <div align="center">
 
-<img src="assets/banner.jpg" alt="ФИТА — фитнес, который думает вместе с тобой" width="100%" />
+<img src="assets/banner.jpg" alt="FITA — fitness that thinks with you" width="100%" />
 
-# ФИТА
+# FITA
 
-### Фитнес, который думает вместе с тобой
+### Fitness that thinks with you
 
-Персональный AI-агент здоровья и активности — на телефоне и компьютере.
+A personal AI coach for health and activity — on your phone and your computer.
 
 ![iOS](https://img.shields.io/badge/iOS-000000?style=flat&logo=apple&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=flat&logo=android&logoColor=white)
 ![Desktop](https://img.shields.io/badge/Desktop-Win%20·%20macOS%20·%20Linux-5A7184?style=flat)
-![Beta](https://img.shields.io/badge/статус-закрытая%20бета-C2683C?style=flat)
+![Beta](https://img.shields.io/badge/status-beta-C2683C?style=flat)
 
-**[Скачать последнюю сборку](https://github.com/runwithfun/FITA-Releases/releases/latest)**
+**[Download the latest build](https://github.com/runwithfun/FITA-Releases/releases/latest)**
 
 </div>
 
 ---
 
-## Что это
+## What it is
 
-**Фита** — не ещё один трекер шагов. Это тёплый личный агент, который живёт внутри
-приложения, **помнит тебя** и собирает главный экран под твой день. Чат — это ядро:
-всё, что можешь ты, может и Фита (с твоего разрешения), а данные и виджеты она
-показывает прямо в разговоре.
+**Fita** is not another step counter. It's a warm personal coach that lives inside the
+app, **remembers you** and builds the home screen around your day. Chat is the core:
+anything you can do in the app, Fita can do too (with your permission), and it shows
+your data and widgets right in the conversation.
 
-## Возможности
+## Features
 
-### Агент «Фита» с памятью
-Не справочник, а собеседник. Помнит твой профиль, цели, ограничения и прошлые
-разговоры (локально, на устройстве), и с первого сообщения говорит по делу — без
-пересказа одного и того же.
+### A coach with memory
+A conversation, not a manual. Fita remembers your profile, goals, limits and past
+chats (stored on your device) and gets to the point from the first message.
 
-### Твой экран — из твоих виджетов
-Собери главный под себя: добавляй, убирай и перетаскивай карточки — шаги, сон,
-пульс, готовность, нагрузка, кольца дня, погода и UV. Живой коверфлоу-пикер, всё
-двигается как на домашнем экране айфона.
+### Workouts and routes
+Pick a sport and a distance, get a route nearby and adjust it right on the map.
+Route moods — through a park, along the water, with street lights, fewer stairs or
+fewer traffic lights — and Fita shows what it could actually confirm on the map.
+Recording survives pauses and interruptions; workouts can be edited and deleted.
 
-### Настоящие данные здоровья
-Только реальные источники — **HealthKit** (iOS) и **Health Connect** (Android).
-Никаких выдуманных цифр: где данных нет — честный пустой стейт, а не фейк.
+### Your home screen, your widgets
+Add, remove and rearrange cards — steps, sleep, heart rate, readiness, training load,
+activity rings, weather and UV. Every widget counts by your local day, and you can
+flip back through past days.
 
-### Карты и живые GPS-маршруты
-Запись пробежки и трек тренировки на карте — **Apple MapKit** (iOS) и
-**Google Maps** (Android).
+### Real health data
+Only real sources — **HealthKit** (iOS) and **Health Connect** (Android). No made-up
+numbers: where there is no data, you see an honest empty state, not a zero.
 
-### Синхронизация между устройствами
-Перенеси свои данные с телефона на компьютер. Два пути: **по сети** (E2E-шифрование)
-и **по QR прямо между устройствами — вообще без сервера**, по локальной сети.
+### Maps and live GPS tracks
+Workout recording and tracks on the map — **Apple MapKit** (iOS) and **Google Maps**
+(Android).
 
-### Везде
-Один агент на всех экранах: **iOS · Android · Desktop (Windows / macOS / Linux)**.
+### Sync between devices
+Move your data from phone to computer: **over the network** (end-to-end encrypted) or
+**by QR code directly between devices — no server at all**, over your local network.
 
-### Живые темы
-Светлые и тёмные оформления (Бумага · Фарфор · Графит · Ночь) с выбором акцента —
-меняются на лету.
+### Everywhere
+One coach on every screen: **iOS · Android · Desktop (Windows / macOS / Linux)**.
+
+### Live themes
+Light and dark looks (Paper · Porcelain · Graphite · Night) with a choice of accent,
+switched on the fly.
 
 ---
 
-## Скачать и установить
+## Download and install
 
-Все сборки — на странице **[Releases](https://github.com/runwithfun/FITA-Releases/releases/latest)**.
-Выбери свою платформу:
+All builds are on the **[Releases](https://github.com/runwithfun/FITA-Releases/releases/latest)** page.
+Pick your platform:
 
-| Платформа | Файл | Как установить |
+| Platform | File | How to install |
 |---|---|---|
-| **Android** | `.apk` | Открой файл на телефоне → разреши «установку из неизвестных источников» → установить. |
-| **Windows** | `FITA-windows-portable.zip` | Распакуй папку → запусти `FITA.exe`. Без установки. SmartScreen может предупредить (сборка без подписи) → «Подробнее» → «Выполнить в любом случае». |
-| **macOS** | App Store | Скоро в App Store — ссылка появится здесь. |
-| **Linux** | `.deb` | `sudo dpkg -i FITA*.deb` (или через менеджер пакетов). |
-| **iOS** | TestFlight | Установка через TestFlight по приглашению. |
+| **Android** | `.apk` | Open the file on your phone → allow installing from unknown sources → install. |
+| **Windows** | `FITA-windows-portable.zip` | Unzip the folder → run `FITA.exe`. No installer. SmartScreen may warn you (the build is unsigned) → "More info" → "Run anyway". |
+| **macOS** | `.dmg` | Open the image and drag FITA to Applications. The build is not notarized: on first launch right-click → Open. |
+| **Linux** | `.deb` | `sudo dpkg -i FITA*.deb` (or use your package manager). |
+| **iOS** | App Store / TestFlight | From the App Store, or via TestFlight by invitation. |
 
-> Каждой сборке прилагается `SHA256SUMS.txt` — можешь сверить целостность скачанного.
+> Every build comes with `SHA256SUMS.txt` so you can verify your download.
 
 ---
 
-## Что нового
+## What's new
 
-История версий и заметки к каждому релизу — во вкладке
-**[Releases](https://github.com/runwithfun/FITA-Releases/releases)**.
+Version history and notes for every release are on the
+**[Releases](https://github.com/runwithfun/FITA-Releases/releases)** tab.
 
 ---
 
 <div align="center">
 
-**Закрытая бета.** Нашёл баг или есть идея? Напиши нам — это очень помогает.
+**Beta.** Found a bug or have an idea? Tell us — it really helps.
 
-<sub>Исходный код — в приватном репозитории. Здесь только готовые сборки.</sub>
+<sub>The source code is private. This repository contains ready-made builds only.</sub>
 
 </div>
